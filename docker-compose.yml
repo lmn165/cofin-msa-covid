@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: mariadb:latest
+    container_name: corona-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "mariadb"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "root"
+    ports:
+      - "3306:3306"
+    networks:
+      - main-network
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gustjd6495/amazone:7.0
+    container_name: cofin
+    command: sh -c "dockerize -wait tcp://host.docker.internal:3306 -timeout 20s && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/web
+    expose:
+      - "8000"
+    depends_on:
+      - db
+networks:
+  main-network:
+    driver: bridge
