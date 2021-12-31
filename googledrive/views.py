@@ -14,7 +14,7 @@ from crwalling import scraper
 @api_view(['GET'])
 def confirmed(request):
     dbDrive = drive.objects.all().values()
-    ic(dbDrive)
+    # ic(dbDrive)
     driveSerializer = c(dbDrive, many=True)
     return JsonResponse(data=driveSerializer.data, safe=False)
 
