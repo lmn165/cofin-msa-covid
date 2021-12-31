@@ -12,7 +12,7 @@ from .models import Today, Week_avg
 def week_detail(request):
     dbToday = Week_avg.objects.all().values()[0]
     weekSerializer = WeekSerializer(dbToday)
-    ic(weekSerializer)
+    # ic(weekSerializer)
     return JsonResponse(data=weekSerializer.data, safe=False)
 
 
@@ -20,5 +20,5 @@ def week_detail(request):
 def today_detail(request):
     dbToday = Today.objects.all().values()[0]
     todaySerializer = TodaySerializer(dbToday)
-    ic(todaySerializer)
+    # ic(todaySerializer)
     return JsonResponse(data=todaySerializer.data, safe=False)
